@@ -20,7 +20,7 @@
 from setuptools import setup
 
 setup(
-    name='orion',
+    name='ansible-orion',
     version='0.1',
     packages=['orion'],
     url='https://github.com/angstwad/orion',
