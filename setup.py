@@ -28,6 +28,5 @@ setup(
     author='Paul Durivage',
     author_email='pauldurivage@gmail.com',
     description='Create Ansible tasks, plays, and playbooks in pure Python',
-    packages=['orion'],
     install_requires=['pyyaml']
 )
