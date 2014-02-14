@@ -1,0 +1,38 @@
+- name: Create servers and load balancer
+  tasks:
+  - name: Create Cloud Server(s)
+    register: rax
+    local_action:
+      module: rax
+      count: 3
+      group: web
+      name: webserver
+      image: ubuntu-1204-lts-precise-pangolin
+      credentials: ~/.rackspace_cloud_credentials
+      flavor: performance1-1
+      region: IAD
+      exact_count: true
+  - name: null
+    with_items: rax.success
+    local_action:
+      module: add_host
+      hostname: '{{ item.name }}'
+      ansible_ssh_pass: '{{ item.rax_adminpass }}'
+      ansible_ssh_host: '{{ item.rax_accessipv4 }}'
+      groupname: rax_servers
+      ansible_ssh_user: root
+  - name: Create Cloud Load Balancer
+    local_action:
+      module: rax_clb
+      credentials: ~/.rackspace_cloud_credentials
+      name: loadbal1
+      algorithm: ROUND_ROBIN
+  hosts:
+  - localhost
+- name: Bootstrap servers
+  roles:
+  - common
+  - nginx
+  - sites
+  hosts:
+  - webservers
