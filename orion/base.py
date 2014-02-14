@@ -60,7 +60,7 @@ class ModuleBase(object):
                     self.module_args[key] = val
         self.module[self.module_name] = self.module_args
 
-    def as_dict(self):
+    def as_obj(self):
         """ Representation of the constructed module as a dict
         :return: dict
         """

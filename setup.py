@@ -17,15 +17,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='orion',
-    version='.1',
+    version='0.1',
     packages=['orion'],
     url='https://github.com/angstwad/orion',
     license='Apache v2.0',
     author='Paul Durivage',
     author_email='pauldurivage@gmail.com',
-    description='Create Ansible tasks, plays, and playbooks in pure Python'
+    description='Create Ansible tasks, plays, and playbooks in pure Python',
+    packages=['orion'],
+    install_requires=['pyyaml']
 )

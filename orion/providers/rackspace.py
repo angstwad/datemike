@@ -1,13 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# This file is part of Orion: https://github.com/angstwad/orion
+#
+# Copyright 2014 Paul Durivage
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from orion.base import ModuleBase
 
 __all__ = [
     'CloudServer', 'CloudLoadBal', 'CloudLoadBalNodes', 'CloudDnsRecord',
     'CloudDns', 'CloudFilesContainer', 'CloudFilesObjects', 'CloudKeypair',
-    'CloudFacts', 'CloudNetwork', 'CloudQueue'
+    'CloudFacts', 'CloudNetwork', 'CloudQueue', 'CloudServersAddHosts'
 ]
+
 
 class CloudBase(ModuleBase):
     def __init__(self,
@@ -46,12 +63,11 @@ class CloudServer(CloudBase):
                  exact_count=True,
                  files=None,
                  group=None,
-                 identity_type='rackspace',
+                 identity_type=None,
                  instance_ids=None,
                  key_name=None,
                  meta=None,
                  networks=None,
-                 region=None,
                  state=None,
                  wait=None,
                  wait_timeout=None,
@@ -76,10 +92,26 @@ class CloudServer(CloudBase):
         self.r_key_name = key_name
         self.r_meta = meta
         self.r_networks = networks
-        self.r_region = region
         self.r_state = state
         self.r_wait = wait
         self.r_wait_timeout = wait_timeout
+
+
+class CloudServersAddHosts(ModuleBase):
+    def __init__(self, groups):
+        """ Class to add add hosts task to a play; useful when creating
+        servers with the 'rax' module
+
+        :param groups: str group or groups separated by a comma into
+        which to assign rax servers
+        """
+        super(CloudServersAddHosts, self).__init__()
+        self.mod_module = 'add_host'
+        self.mod_hostname = "{{ item.name }}"
+        self.mod_ansible_ssh_host = "{{ item.rax_accessipv4 }}"
+        self.mod_ansible_ssh_pass = "{{ item.rax_adminpass }}"
+        self.mod_ansible_ssh_user = 'root'
+        self.mod_groupname = groups
 
 
 class CloudLoadBal(CloudBase):
@@ -102,7 +134,7 @@ class CloudLoadBal(CloudBase):
         self.module_name = 'rax_clb'
 
         self.r_name = name or 'load-bal'
-        self.r_algoritm = algorithm
+        self.r_algorithm = algorithm
         self.r_meta = meta
         self.r_port = port
         self.r_protocol = protocol
