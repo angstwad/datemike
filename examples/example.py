@@ -22,6 +22,7 @@ from orion.providers.rackspace import *
 
 CREDS = '~/.rackspace_cloud_credentials'
 
+# Instantiate a Cloud Server module object
 servers = CloudServer(
     'webserver',
     'performance1-1',
@@ -31,26 +32,37 @@ servers = CloudServer(
     count=3,
     group='web'
 )
+# Instantiate the helper module to add rax servers into a hosts group
 add_host = CloudServersAddHosts('rax_servers')
+# And create a cloud load balancer
 loadbal = CloudLoadBal('loadbal1', credentials=CREDS, algorithm='ROUND_ROBIN')
 
+# Create a task for each server, passing task-level keyword args
+# directly into the Task constructor
 task_servers = Task(servers, local_action=True, register='rax')
 task_add_hosts = Task(add_host, local_action=True, with_items='rax.success')
 task_loadbal = Task(loadbal, local_action=True)
 
+# Instantiate a Play
 play_cloud = Play('Create servers and load balancer')
 # We can add a single task, or optionally, a list of tasks
 play_cloud.add_task([task_servers, task_add_hosts, task_loadbal])
+# And add hosts to the play
 play_cloud.add_host('localhost')
 
 # Provide a list of roles, or optionally, a single string.
 roles = ['common', 'nginx', 'sites']
 
+# Instantiate a new play
 play_bootstrap = Play('Bootstrap servers')
+# Add a group of roles to this play
 play_bootstrap.add_role(roles)
+# ...and add hosts
 play_bootstrap.add_host('webservers')
 
+# Instantiate a playbook
 book = Playbook()
+# And add our plays to the playbook
 book.add_play(play_cloud)
 book.add_play(play_bootstrap)
 
