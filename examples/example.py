@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# This file is part of Orion: https://github.com/angstwad/orion
+# This file is part of datemike: https://github.com/angstwad/datemike
 #
 # Copyright 2014 Paul Durivage
 #
@@ -17,8 +17,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from orion import Task, Play, Playbook
-from orion.providers.rackspace import *
+from datemike import Task, Play, Playbook
+from datemike.providers.rackspace import *
 
 CREDS = '~/.rackspace_cloud_credentials'
 

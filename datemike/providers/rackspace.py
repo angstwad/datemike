@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# This file is part of Orion: https://github.com/angstwad/orion
+# This file is part of datemike: https://github.com/angstwad/datemike
 #
 # Copyright 2014 Paul Durivage
 #
@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from orion.base import ModuleBase
+from datemike.base import ModuleBase
 
 __all__ = [
     'CloudServer', 'CloudLoadBal', 'CloudLoadBalNodes', 'CloudDnsRecord',

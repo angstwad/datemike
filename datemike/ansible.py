@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# This file is part of Orion: https://github.com/angstwad/orion
+# This file is part of datemike: https://github.com/angstwad/datemike
 #
 # Copyright 2014 Paul Durivage
 #
@@ -20,7 +20,7 @@
 import os
 from collections import OrderedDict
 
-from orion.utils import pretty_yaml
+from datemike.utils import pretty_yaml
 
 
 class Task(object):

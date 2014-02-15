@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# This file is part of Orion: https://github.com/angstwad/orion
+# This file is part of datemike: https://github.com/angstwad/datemike
 #
 # Copyright 2014 Paul Durivage
 #
@@ -18,13 +18,13 @@
 # limitations under the License.
 
 """
-orion
+datemike
 -----
 
 Create Ansible tasks, plays, and playbooks in pure Python.
 """
 
-from orion.ansible import Task, Play, Playbook
-from orion.base import ModuleBase
+from datemike.ansible import Task, Play, Playbook
+from datemike.base import ModuleBase
 
 __version__ = '0.1'

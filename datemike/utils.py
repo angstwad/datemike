@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# This file is part of Orion: https://github.com/angstwad/orion
+# This file is part of datemike: https://github.com/angstwad/datemike
 #
 # Copyright 2014 Paul Durivage
 #

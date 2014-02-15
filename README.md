@@ -1,15 +1,15 @@
-Orion
-=====
+# Date Mike
+
+![Imgur](http://i.imgur.com/p2GywkM.png)
 
 A library to create Ansible tasks, plays, and playbooks in Python.
-
 
 ## Examples
 Please note that the following is an overly-simplified example for a quick demo only.  Please see the `examples` dir for a full example.  This builds a single play that builds a single Rackspace server.
 
 ```
-from orion import Task, Play, Playbook
-from orion.providers.rackspace import CloudServer
+from datemike import Task, Play, Playbook
+from datemike.providers.rackspace import CloudServer
 
 
 servers = CloudServer('webserver', 'performance1-1', 
@@ -29,13 +29,13 @@ The `Play` and `Playbook` have a `to_yaml` method that will dump the object as a
 
 ## Extending
 
-If adding your own modules to `providers`, subclass the included base class `orion.base.ModuleBase`.  `ModuleBase` makes some assumptions, primarily that any object attribute name must begin with mod_ in order for it to be passed along as a module argument once wrapped in a task.  `ModuleBase` provides some methods for you, such as returning the resulting module object as a native Python data structure (`as_obj`) and dumping the module to YAML (`to_yaml`).
+If adding your own modules to `providers`, subclass the included base class `datemike.base.ModuleBase`.  `ModuleBase` makes some assumptions, primarily that any object attribute name must begin with mod_ in order for it to be passed along as a module argument once wrapped in a task.  `ModuleBase` provides some methods for you, such as returning the resulting module object as a native Python data structure (`as_obj`) and dumping the module to YAML (`to_yaml`).
 
 ## Use
 
-Orion follows the Ansible object hierarchy.  Modules are used to create tasks (and therefore `Task` objects can wrap modules).  `Tasks` are added to `Plays`, and `Plays` are added to `Playbooks`.  Most importatantly, it's not the purpose of Orion to attempt to create a python representation of each and every Ansible module in existence.  Instead, anywhere modules are needed to programmatically be created by a 3rd party application is where a module object should be added to Orion.
+datemike follows the Ansible object hierarchy.  Modules are used to create tasks (and therefore `Task` objects can wrap modules).  `Tasks` are added to `Plays`, and `Plays` are added to `Playbooks`.  Most importatantly, it's not the purpose of datemike to attempt to create a python representation of each and every Ansible module in existence.  Instead, anywhere modules are needed to programmatically be created by a 3rd party application is where a module object should be added to datemike.
 
-In the `orion/providers` directory, I have `rackspace.py` representing all the available rax* modules in Ansible.  Again, I don't want a representation of *all* the Ansible modules, only Rackspace.  That's because I fully intend to programmatically instantiate them, wrap them in a task, and create full plays and playbooks orchestrating the construction Rackspace cloud enviroment.  However, all subsequent configuration management will not be done programmatically, but rather via the roles mechanism.  Therefore, there's no need to programmatically interact (or write) classes for Modules -- we'll attach our roles to plays via the `Play.add_role()` method.
+In the `datemike/providers` directory, I have `rackspace.py` representing all the available rax* modules in Ansible.  Again, I don't want a representation of *all* the Ansible modules, only Rackspace.  That's because I fully intend to programmatically instantiate them, wrap them in a task, and create full plays and playbooks orchestrating the construction Rackspace cloud enviroment.  However, all subsequent configuration management will not be done programmatically, but rather via the roles mechanism.  Therefore, there's no need to programmatically interact (or write) classes for Modules -- we'll attach our roles to plays via the `Play.add_role()` method.
 
 ## Why?
 

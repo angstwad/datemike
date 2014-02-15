@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# This file is part of Orion: https://github.com/angstwad/orion
+# This file is part of datemike: https://github.com/angstwad/datemike
 #
 # Copyright 2014 Paul Durivage
 #
@@ -20,10 +20,10 @@
 from setuptools import setup
 
 setup(
-    name='ansible-orion',
+    name='datemike',
     version='0.1',
-    packages=['orion'],
-    url='https://github.com/angstwad/orion',
+    packages=['datemike'],
+    url='https://github.com/angstwad/datemike',
     license='Apache v2.0',
     author='Paul Durivage',
     author_email='pauldurivage@gmail.com',
