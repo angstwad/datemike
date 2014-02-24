@@ -1,5 +1,7 @@
 # Date Mike
 
+[![Build Status](https://drone.io/github.com/angstwad/datemike/status.png)](https://drone.io/github.com/angstwad/datemike/latest)
+
 ![Imgur](http://i.imgur.com/p2GywkM.png)
 
 A library to create Ansible tasks, plays, and playbooks in Python.
