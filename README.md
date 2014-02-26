@@ -25,6 +25,21 @@ play.add_host('localhost')
 
 print play.to_yaml()
 ```
+This results in the following:
+```
+name: Launch a single server in Rackspace
+tasks:
+- name: Create Cloud Server(s)
+  register: rax
+  local_action:
+    module: rax
+    image: ubuntu-1204-lts-precise-pangolin
+    name: webserver
+    flavor: performance1-1
+    exact_count: true
+hosts:
+- localhost
+```
 
 The `Play` and `Playbook` have a `to_yaml` method that will dump the object as an Ansible-compatible YAML data structure.
 
