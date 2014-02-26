@@ -26,6 +26,16 @@ tasks:
     name: servername
 """
 
+desired_playbook_yaml = """- name: TestPlay
+  tasks:
+  - name: Create Cloud Server(s)
+    rax:
+      exact_count: true
+      flavor: performance1-1
+      image: image-ubuntu-1204
+      name: servername
+"""
+
 desired_task_obj = OrderedDict(
     [
         ('name', 'Create Cloud Server(s)'),
@@ -50,6 +60,16 @@ class TestAnsible(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def setup_play(self):
+        play = ansible.Play('TestPlay')
+        play.add_task(self.task)
+        return play
+
+    def setup_playbook(self):
+        play = self.setup_play()
+        book = ansible.Playbook()
+        return play, book
 
     def test_task_localaction(self):
         task = ansible.Task(self.server, local_action=True)
@@ -101,14 +121,12 @@ class TestAnsible(unittest.TestCase):
                          'Play name not equal to TestPlay')
 
     def test_play_add_task(self):
-        play = ansible.Play('TestPlay')
-        play.add_task(self.task)
+        play = self.setup_play()
         self.assertEqual(play.play.get('tasks')[0], self.task.as_obj(),
                          'Task not at expected index in play object')
 
     def test_play_add_tasks(self):
-        play = ansible.Play('TestPlay')
-        play.add_task(self.task)
+        play = self.setup_play()
         task = ansible.Task(self.server, local_action=True)
         play.add_task([self.task, task])
         self.assertEqual(play.play.get('tasks', [])[0], self.task.as_obj(),
@@ -129,13 +147,28 @@ class TestAnsible(unittest.TestCase):
                       'testrole not in play roles')
 
     def test_play_yaml(self):
-        play = ansible.Play('TestPlay')
-        play.add_task(self.task)
+        play = self.setup_play()
         self.assertEqual(desired_play_yaml, play.to_yaml(),
                          'Play YAML does not equal expected YAML')
 
-    def test_playbook(self):
-        pass
+    def test_playbook_add_play(self):
+        play, book = self.setup_playbook()
+        book.add_play(play)
+        self.assertEquals(book.playbook[0], play.as_obj(),
+                          'play does not equal playbook play at index 0')
+
+    def test_playbook_add_plays(self):
+        play, book = self.setup_playbook()
+        play2 = self.setup_play()
+        book.add_play([play, play2])
+        self.assertEqual(len(book.playbook), 2,
+                         'length of plays in playbook is not equal to 2')
+
+    def test_playbook_yaml(self):
+        play, book = self.setup_playbook()
+        book.add_play(play)
+        self.assertEqual(desired_playbook_yaml, book.to_yaml(),
+                         'Playbook YAML output does not match intended YAML')
 
 
 def main():
