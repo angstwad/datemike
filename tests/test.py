@@ -8,7 +8,7 @@ import yaml
 from datemike import ansible, base, utils
 from datemike.providers import rackspace
 
-desired_yaml = """name: Create Cloud Server(s)
+desired_task_yaml = """name: Create Cloud Server(s)
 rax:
   exact_count: true
   flavor: performance1-1
@@ -16,7 +16,17 @@ rax:
   name: servername
 """
 
-desired_obj = OrderedDict(
+desired_play_yaml = """name: TestPlay
+tasks:
+- name: Create Cloud Server(s)
+  rax:
+    exact_count: true
+    flavor: performance1-1
+    image: image-ubuntu-1204
+    name: servername
+"""
+
+desired_task_obj = OrderedDict(
     [
         ('name', 'Create Cloud Server(s)'),
         (
@@ -37,7 +47,6 @@ class TestAnsible(unittest.TestCase):
             'servername', 'performance1-1', 'image-ubuntu-1204'
         )
         self.task = ansible.Task(self.server)
-        self.play = ansible.Play('')
 
     def tearDown(self):
         pass
@@ -74,19 +83,59 @@ class TestAnsible(unittest.TestCase):
 
     def test_task_to_yaml(self):
         task_yaml = self.task.to_yaml()
-        self.assertEqual(desired_yaml, task_yaml,
+        self.assertEqual(desired_task_yaml, task_yaml,
                          'Task YAML and expected YAML are not equal.')
 
     def test_task_as_str(self):
-        task_yaml =  self.task.to_yaml()
-        self.assertEqual(desired_yaml, str(self.task))
+        task_yaml = self.task.to_yaml()
+        self.assertEqual(desired_task_yaml, str(task_yaml))
 
     def test_task_as_obj(self):
         task_obj = self.task.as_obj()
-        self.assertEqual(desired_obj, task_obj,
+        self.assertEqual(desired_task_obj, task_obj,
                          'Task object and expected object are not the equal.')
 
+    def test_play(self):
+        play = ansible.Play('TestPlay')
+        self.assertEqual(play.play.get('name'), 'TestPlay',
+                         'Play name not equal to TestPlay')
 
+    def test_play_add_task(self):
+        play = ansible.Play('TestPlay')
+        play.add_task(self.task)
+        self.assertEqual(play.play.get('tasks')[0], self.task.as_obj(),
+                         'Task not at expected index in play object')
+
+    def test_play_add_tasks(self):
+        play = ansible.Play('TestPlay')
+        play.add_task(self.task)
+        task = ansible.Task(self.server, local_action=True)
+        play.add_task([self.task, task])
+        self.assertEqual(play.play.get('tasks', [])[0], self.task.as_obj(),
+                         'Play task index 0 does not match self.task')
+        self.assertNotEqual(play.play.get('tasks')[1], task.as_obj(),
+                            'Play task index 1 shouldn\' match local task')
+
+    def test_play_add_host(self):
+        play = ansible.Play('TestPlay')
+        play.add_host('testhost')
+        self.assertIn('testhost', play.as_obj().get('hosts'),
+                      'testhosts not in play hosts')
+
+    def test_play_add_role(self):
+        play = ansible.Play('TestPlay')
+        play.add_role('testrole')
+        self.assertIn('testrole', play.as_obj().get('roles'),
+                      'testrole not in play roles')
+
+    def test_play_yaml(self):
+        play = ansible.Play('TestPlay')
+        play.add_task(self.task)
+        self.assertEqual(desired_play_yaml, play.to_yaml(),
+                         'Play YAML does not equal expected YAML')
+
+    def test_playbook(self):
+        pass
 
 
 def main():
