@@ -24,7 +24,7 @@ datemike
 Create Ansible tasks, plays, and playbooks in pure Python.
 """
 
-from datemike.ansible import Task, Play, Playbook
-from datemike.base import ModuleBase
+from datemike.ansible import Task, Play, Playbook  # NOQA
+from datemike.base import ModuleBase  # NOQA
 
-__version__ = '0.1'
+__version__ = '0.1.1'
