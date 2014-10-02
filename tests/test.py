@@ -151,6 +151,11 @@ class TestAnsible(unittest.TestCase):
         self.assertEqual(desired_play_yaml, play.to_yaml(),
                          'Play YAML does not equal expected YAML')
 
+    def test_play_as_str(self):
+        play = self.setup_play()
+        self.assertEqual(desired_play_yaml, str(play),
+                         'Play YAML does not equal expected YAML')
+
     def test_playbook_add_play(self):
         play, book = self.setup_playbook()
         book.add_play(play)
@@ -168,6 +173,12 @@ class TestAnsible(unittest.TestCase):
         play, book = self.setup_playbook()
         book.add_play(play)
         self.assertEqual(desired_playbook_yaml, book.to_yaml(),
+                         'Playbook YAML output does not match intended YAML')
+
+    def test_playbook_as_str(self):
+        play, book = self.setup_playbook()
+        book.add_play(play)
+        self.assertEqual(desired_playbook_yaml, str(book),
                          'Playbook YAML output does not match intended YAML')
 
 

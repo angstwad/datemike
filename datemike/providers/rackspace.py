@@ -27,12 +27,13 @@ __all__ = [
 
 
 class CloudBase(ModuleBase):
-    def __init__(self,
-                 api_key=None,
-                 credentials=None,
-                 region=None,
-                 username=None
-        ):
+    def __init__(
+        self,
+        api_key=None,
+        credentials=None,
+        region=None,
+        username=None
+    ):
         super(CloudBase, self).__init__()
         self.r_api_key = api_key
         self.r_credentials = credentials
@@ -54,26 +55,30 @@ class CloudBase(ModuleBase):
 
 
 class CloudServer(CloudBase):
-    def __init__(self, name, flavor, image,
-                 display_name="Create Cloud Server(s)",
-                 auto_increment=None,
-                 count=None,
-                 count_offset=None,
-                 disk_config=None,
-                 exact_count=True,
-                 files=None,
-                 group=None,
-                 identity_type=None,
-                 instance_ids=None,
-                 key_name=None,
-                 meta=None,
-                 networks=None,
-                 state=None,
-                 wait=None,
-                 wait_timeout=None,
-                 **kwargs
-        ):
-        super(CloudServer, self).__init__(**kwargs) 
+    def __init__(
+        self,
+        name,
+        flavor,
+        image,
+        display_name="Create Cloud Server(s)",
+        auto_increment=None,
+        count=None,
+        count_offset=None,
+        disk_config=None,
+        exact_count=True,
+        files=None,
+        group=None,
+        identity_type=None,
+        instance_ids=None,
+        key_name=None,
+        meta=None,
+        networks=None,
+        state=None,
+        wait=None,
+        wait_timeout=None,
+        **kwargs
+    ):
+        super(CloudServer, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = "rax"
 
@@ -115,21 +120,23 @@ class CloudServersAddHosts(ModuleBase):
 
 
 class CloudLoadBal(CloudBase):
-    def __init__(self, name,
-                 display_name='Create Cloud Load Balancer',
-                 algorithm=None,
-                 meta=None,
-                 port=None,
-                 protocol=None,
-                 state=None,
-                 timeout=None,
-                 type=None,
-                 vip_id=None,
-                 wait=None,
-                 wait_timeout=None,
-                 **kwargs
-        ):
-        super(CloudLoadBal, self).__init__(**kwargs) 
+    def __init__(
+        self,
+        name,
+        display_name='Create Cloud Load Balancer',
+        algorithm=None,
+        meta=None,
+        port=None,
+        protocol=None,
+        state=None,
+        timeout=None,
+        type=None,
+        vip_id=None,
+        wait=None,
+        wait_timeout=None,
+        **kwargs
+    ):
+        super(CloudLoadBal, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_clb'
 
@@ -147,21 +154,24 @@ class CloudLoadBal(CloudBase):
 
 
 class CloudLoadBalNodes(CloudBase):
-    def __init__(self, name, load_balancer_id,
-                 display_name='Create Cloud Load Balancer Node(s)',
-                 address=None,
-                 condition=None,
-                 node_id=None,
-                 port=None,
-                 state=None,
-                 type=None,
-                 virtualenv=None,
-                 wait=None,
-                 wait_timeout=None,
-                 weight=None,
-                 **kwargs
-        ):
-        super(CloudLoadBalNodes, self).__init__(**kwargs) 
+    def __init__(
+        self,
+        name,
+        load_balancer_id,
+        display_name='Create Cloud Load Balancer Node(s)',
+        address=None,
+        condition=None,
+        node_id=None,
+        port=None,
+        state=None,
+        type=None,
+        virtualenv=None,
+        wait=None,
+        wait_timeout=None,
+        weight=None,
+        **kwargs
+    ):
+        super(CloudLoadBalNodes, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_clb_nodes'
 
@@ -180,15 +190,17 @@ class CloudLoadBalNodes(CloudBase):
 
 
 class CloudDns(CloudBase):
-    def __init__(self, domain_name,
-                 display_name='Create Cloud DNS Domain',
-                 comment=None,
-                 email=None,
-                 state=None,
-                 ttl=None,
-                 **kwargs
-        ):
-        super(CloudDns, self).__init__(**kwargs) 
+    def __init__(
+        self,
+        domain_name,
+        display_name='Create Cloud DNS Domain',
+        comment=None,
+        email=None,
+        state=None,
+        ttl=None,
+        **kwargs
+    ):
+        super(CloudDns, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_dns'
 
@@ -200,16 +212,20 @@ class CloudDns(CloudBase):
 
 
 class CloudDnsRecord(CloudBase):
-    def __init__(self, domain_name, fqdn, data,
-                 display_name='Create Cloud DNS Record',
-                 comment=None,
-                 priority=None,
-                 state=None,
-                 ttl=None,
-                 type_=None,
-                 **kwargs
-        ):
-        super(CloudDnsRecord, self).__init__(**kwargs) 
+    def __init__(
+        self,
+        domain_name,
+        fqdn,
+        data,
+        display_name='Create Cloud DNS Record',
+        comment=None,
+        priority=None,
+        state=None,
+        ttl=None,
+        type_=None,
+        **kwargs
+    ):
+        super(CloudDnsRecord, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_dns_record'
 
@@ -224,19 +240,21 @@ class CloudDnsRecord(CloudBase):
 
 
 class CloudFilesContainer(CloudBase):
-    def __init__(self, container,
-                 display_name='Cloud Files container',
-                 clear_meta=None,
-                 meta=None,
-                 private=None,
-                 public=None,
-                 ttl=None,
-                 type_=None,
-                 web_error=None,
-                 web_index=None,
-                 **kwargs
-        ):
-        super(CloudFilesContainer, self).__init__(**kwargs) 
+    def __init__(
+        self,
+        container,
+        display_name='Cloud Files container',
+        clear_meta=None,
+        meta=None,
+        private=None,
+        public=None,
+        ttl=None,
+        type_=None,
+        web_error=None,
+        web_index=None,
+        **kwargs
+    ):
+        super(CloudFilesContainer, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_files'
 
@@ -252,19 +270,21 @@ class CloudFilesContainer(CloudBase):
 
 
 class CloudFilesObjects(CloudBase):
-    def __init__(self, container,
-                 display_name='Cloud Files container objects',
-                 clear_meta=None,
-                 dest=None,
-                 expires=None,
-                 meta=None,
-                 method=None,
-                 src=None,
-                 structure=None,
-                 type_=None,
-                 **kwargs
-        ):
-        super(CloudFilesObjects, self).__init__(**kwargs) 
+    def __init__(
+        self,
+        container,
+        display_name='Cloud Files container objects',
+        clear_meta=None,
+        dest=None,
+        expires=None,
+        meta=None,
+        method=None,
+        src=None,
+        structure=None,
+        type_=None,
+        **kwargs
+    ):
+        super(CloudFilesObjects, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_files_objects'
 
@@ -280,13 +300,15 @@ class CloudFilesObjects(CloudBase):
 
 
 class CloudKeypair(CloudBase):
-    def __init__(self, name,
-                 display_name='Add Cloud Keypair',
-                 public_key=None,
-                 state=None,
-                 **kwargs
-        ):
-        super(CloudQueue, self).__init__(**kwargs)
+    def __init__(
+        self,
+        name,
+        display_name='Add Cloud Keypair',
+        public_key=None,
+        state=None,
+        **kwargs
+    ):
+        super(CloudKeypair, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_keypair'
 
@@ -296,13 +318,15 @@ class CloudKeypair(CloudBase):
 
 
 class CloudNetwork(CloudBase):
-    def __init__(self, label,
-                 display_name='Add Cloud Network',
-                 cidr=None,
-                 state=None,
-                 **kwargs
-        ):
-        super(CloudQueue, self).__init__(**kwargs)
+    def __init__(
+        self,
+        label,
+        display_name='Add Cloud Network',
+        cidr=None,
+        state=None,
+        **kwargs
+    ):
+        super(CloudNetwork, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_network'
 
@@ -312,11 +336,13 @@ class CloudNetwork(CloudBase):
 
 
 class CloudQueue(CloudBase):
-    def __init__(self, name,
-                 display_name='Create Cloud Queue',
-                 state=None,
-                 **kwargs
-        ):
+    def __init__(
+        self,
+        name,
+        display_name='Create Cloud Queue',
+        state=None,
+        **kwargs
+    ):
         super(CloudQueue, self).__init__(**kwargs)
         self.display_name = display_name
         self.module_name = 'rax_queue'
@@ -326,13 +352,15 @@ class CloudQueue(CloudBase):
 
 
 class CloudFacts(CloudBase):
-    def __init__(self, display_name='Get Rackspace facts',
-                 address=None,
-                 id_=None,
-                 name=None,
-                 **kwargs
-        ):
-        super(CloudQueue, self).__init__(**kwargs)
+    def __init__(
+        self,
+        display_name='Get Rackspace facts',
+        address=None,
+        id_=None,
+        name=None,
+        **kwargs
+    ):
+        super(CloudFacts, self).__init__(**kwargs)
         self.display_name = display_name
         self.r_address = address
         self.r_id = id_
