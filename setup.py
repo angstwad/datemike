@@ -18,10 +18,11 @@
 # limitations under the License.
 
 from setuptools import setup
+from datemike import __version__
 
 setup(
     name='datemike',
-    version='0.1',
+    version=__version__,
     packages=['datemike'],
     url='https://github.com/angstwad/datemike',
     license='Apache v2.0',
